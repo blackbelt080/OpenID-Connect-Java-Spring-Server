@@ -79,7 +79,7 @@ public class ConnectAuthCodeTokenGranter implements TokenGranter {
 	 * @param clientDetailsService
 	 */
 	public ConnectAuthCodeTokenGranter(
-			DefaultOAuth2ProviderTokenService tokenServices,
+			OAuth2TokenEntityService tokenServices,
 			AuthorizationCodeServices authorizationCodeServices,
 			ClientDetailsService clientDetailsService) {
 		

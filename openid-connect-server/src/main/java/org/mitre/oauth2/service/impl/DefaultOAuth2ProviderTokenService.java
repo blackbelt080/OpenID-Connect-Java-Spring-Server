@@ -129,6 +129,18 @@ public class DefaultOAuth2ProviderTokenService implements OAuth2TokenEntityServi
     }
 
 	@Override
+	public void enhanceAccessToken(OAuth2AccessToken token) {
+		
+		return;
+	}
+	
+	@Override
+	public void finishAccessToken(OAuth2AccessToken token) {
+		
+		return;
+	}
+	
+	@Override
     public OAuth2AccessTokenEntity refreshAccessToken(String refreshTokenValue, Set<String> scope) throws AuthenticationException {
 		
 		OAuth2RefreshTokenEntity refreshToken = tokenRepository.getRefreshTokenByValue(refreshTokenValue);
