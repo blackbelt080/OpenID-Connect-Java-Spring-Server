@@ -26,6 +26,7 @@ import org.springframework.security.oauth2.common.exceptions.InvalidClientExcept
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.code.AuthorizationRequestHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -129,7 +130,7 @@ public class DefaultOAuth2ProviderTokenService implements OAuth2TokenEntityServi
     }
 
 	@Override
-	public void enhanceAccessToken(OAuth2AccessToken token) {
+	public void enhanceAccessToken(OAuth2AccessToken token, AuthorizationRequestHolder requestHolder) {
 		
 		return;
 	}

@@ -6,6 +6,7 @@ import org.mitre.oauth2.model.ClientDetailsEntity;
 import org.mitre.oauth2.model.OAuth2AccessTokenEntity;
 import org.mitre.oauth2.model.OAuth2RefreshTokenEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.code.AuthorizationRequestHolder;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 
@@ -13,7 +14,7 @@ public interface OAuth2TokenEntityService extends AuthorizationServerTokenServic
 
 	public OAuth2AccessTokenEntity getAccessToken(String accessTokenValue);
 	
-	public void enhanceAccessToken(OAuth2AccessToken token);
+	public void enhanceAccessToken(OAuth2AccessToken token, AuthorizationRequestHolder requestHolder);
 	
 	public void finishAccessToken(OAuth2AccessToken token);
 	
