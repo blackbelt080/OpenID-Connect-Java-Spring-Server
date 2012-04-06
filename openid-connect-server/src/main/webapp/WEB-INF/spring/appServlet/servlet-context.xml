@@ -47,8 +47,22 @@
 	<beans:import resource="controllers.xml" />
 
 	<!-- SECOAUTH Authorization Server, with our custom token granter plugged in -->
+	
+	<!-- Instantiate SECOAUTH token granter; plug in our custom token services -->
+	<beans:bean id="authCodeTokenGranter" class="org.springframework.security.oauth2.provider.code.AuthorizationCodeTokenGranter">
+		<beans:constructor-arg>
+			<beans:ref bean="openIdConnectTokenService"/>
+		</beans:constructor-arg>
+		<beans:constructor-arg>
+			<beans:ref bean="authCodeServices"/>
+		</beans:constructor-arg>
+		<beans:constructor-arg>
+			<beans:bean class="org.mitre.oauth2.service.impl.DefaultOAuth2ClientDetailsEntityService"/>
+		</beans:constructor-arg>
+	</beans:bean>
+	
 	<oauth:authorization-server client-details-service-ref="defaultOAuth2ClientDetailsEntityService" 
-		token-services-ref="defaultOAuth2ProviderTokenService" token-granter-ref="connectAuthCodeTokenGranter"
+		token-services-ref="openIdConnectTokenService" token-granter-ref="authCodeTokenGranter"
 		authorization-endpoint-url="/openidconnect/auth" token-endpoint-url="/openidconnect/token">
 		<oauth:authorization-code authorization-code-services-ref="authCodeServices"/>
 	</oauth:authorization-server>

@@ -37,7 +37,7 @@ import com.google.common.collect.Sets;
  * @author jricher
  * 
  */
-@Service
+//@Service
 @Transactional
 public class DefaultOAuth2ProviderTokenService implements OAuth2TokenEntityService {
 	

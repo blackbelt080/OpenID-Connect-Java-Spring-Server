@@ -19,9 +19,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.oauth2.provider.code.AuthorizationRequestHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.base.Strings;
 
+@Service
+@Transactional
 public class OpenIdConnectTokenService extends DefaultOAuth2ProviderTokenService {
 	
 	private static Logger logger = LoggerFactory.getLogger(OpenIdConnectTokenService.class);
