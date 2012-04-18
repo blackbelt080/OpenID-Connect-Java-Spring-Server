@@ -23,7 +23,7 @@
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
 
-	<!-- Bean to hold configuration propreties -->
+	<!-- Bean to hold configuration properties -->
 	<bean id="configBean" class="org.mitre.openid.connect.config.ConfigurationPropertiesBean">
 		<property name="issuer" value="http://localhost/" />
  		<property name="defaultJwtSigner"  value="rsa1"/>
@@ -33,11 +33,11 @@
 	<import resource="data-context.xml" />	
 
 <!-- Spring Security configuration -->
-	<security:global-method-security pre-post-annotations="enabled" proxy-target-class="true" authentication-manager-ref="springSecurityAuthenticationManager"/>
+	<security:global-method-security pre-post-annotations="enabled" proxy-target-class="true" authentication-manager-ref="authenticationManager"/>
 
-	<security:http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager" 
+	<security:http pattern="/openidconnect/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager" 
 		entry-point-ref="oauthAuthenticationEntryPoint">
-		<security:intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" />
+		<security:intercept-url pattern="/openidconnect/token" access="IS_AUTHENTICATED_FULLY" />
 		<security:anonymous enabled="false" />
 		<security:http-basic entry-point-ref="oauthAuthenticationEntryPoint" />
 		<!-- include this only if you need to authenticate clients via request parameters -->
@@ -45,8 +45,9 @@
 		<security:access-denied-handler ref="oauthAccessDeniedHandler" />
 	</security:http>
 
-	<security:http auto-config="true" disable-url-rewriting="true"> <!-- authentication-manager-ref="springSecurityAuthenticationManager" -->
-		<security:intercept-url pattern="/oauth/**" access="ROLE_USER" />
+	<security:http auto-config="true" disable-url-rewriting="true" authentication-manager-ref="authenticationManager">
+		<security:intercept-url pattern="/openidconnect/**" access="ROLE_USER" /> <!-- This is superceeded by the /oauth/token pattern above -->
+		<security:intercept-url pattern="/oauth/**" access="ROLE_USER" /> 
 		<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<security:anonymous />
 	</security:http>
@@ -62,7 +63,8 @@
 	<!-- SECOAUTH Authorization Server, with our custom token granter plugged in -->
 	<oauth:authorization-server client-details-service-ref="defaultOAuth2ClientDetailsEntityService" 
 		token-services-ref="defaultOAuth2ProviderTokenService" token-granter-ref="connectAuthCodeTokenGranter"
-		user-approval-handler-ref="userApprovalHandler">
+		user-approval-handler-ref="userApprovalHandler"
+		authorization-endpoint-url="/openidconnect/auth" token-endpoint-url="/openidconnect/token">
 		<oauth:authorization-code authorization-code-services-ref="authCodeServices" />
 	</oauth:authorization-server>
 
